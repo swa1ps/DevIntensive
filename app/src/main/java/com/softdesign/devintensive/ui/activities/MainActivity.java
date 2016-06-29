@@ -9,19 +9,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG= ConstantManager.TAG_PREFIX+"Main Activity";
+
+    private ImageView mCallImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG,"onCreate");
+
+        mCallImg = (ImageView)findViewById(R.id.call_img);
+        mCallImg.setOnClickListener(this);
 
         if (savedInstanceState == null){
             // активити запускается впервые
@@ -68,7 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.call_img:
+                showProgress();
+                runWithDalay();
+                break;
         }
     }
 
@@ -76,6 +88,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+
+    }
+
+    private void runWithDalay(){
+        final android.os.Handler handler = new android.os.Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideProgress();
+            }
+        }, 3000);
 
     }
 }

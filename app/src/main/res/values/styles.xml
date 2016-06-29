@@ -59,4 +59,10 @@
         <item name="android:layout_marginLeft">@dimen/spacing_normal_16</item>
         <item name="android:layout_marginRight">@dimen/spacing_normal_16</item>
     </style>
+
+
+    <!-- progress dialog-->
+    <style name="custom_dialog">
+        <item name="android:fullDark">@android:color/transparent</item>
+    </style>
 </resources>
