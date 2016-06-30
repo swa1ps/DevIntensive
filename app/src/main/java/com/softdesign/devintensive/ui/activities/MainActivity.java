@@ -3,8 +3,12 @@ package com.softdesign.devintensive.ui.activities;
 import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.annotation.ColorInt;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,11 +21,14 @@ import com.softdesign.devintensive.utils.ConstantManager;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG= ConstantManager.TAG_PREFIX+"Main Activity";
-
     private ImageView mCallImg;
+    private CoordinatorLayout mCoordinatorLayout;
+    private Toolbar mToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +37,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         Log.d(TAG,"onCreate");
 
         mCallImg = (ImageView)findViewById(R.id.call_img);
+        mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_coordinator_container);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mCallImg.setOnClickListener(this);
+
+        setupToolbar();
 
         if (savedInstanceState == null){
             // активити запускается впервые
+
         }else {
             // активити уже создалось
+
         }
     }
 
@@ -79,7 +92,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.call_img:
                 showProgress();
-                runWithDalay();
                 break;
         }
     }
@@ -91,15 +103,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
-    private void runWithDalay(){
-        final android.os.Handler handler = new android.os.Handler();
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-            }
-        }, 3000);
-
+    private void showSnackBar(String message){
+        Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
+    }
+    private void setupToolbar(){
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 }
